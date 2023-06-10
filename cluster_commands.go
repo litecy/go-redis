@@ -19,10 +19,9 @@ func (c *ClusterClient) DBSize(ctx context.Context) *IntCmd {
 			return nil
 		})
 		if err != nil {
-			cmd.SetErr(err)
-		} else {
-			cmd.val = size
+			return err
 		}
+		cmd.val = size
 		return nil
 	})
 	return cmd
@@ -47,7 +46,7 @@ func (c *ClusterClient) ScriptLoad(ctx context.Context, script string) *StringCm
 			return nil
 		})
 		if err != nil {
-			cmd.SetErr(err)
+			return err
 		}
 		return nil
 	})
@@ -61,7 +60,7 @@ func (c *ClusterClient) ScriptFlush(ctx context.Context) *StatusCmd {
 			return shard.ScriptFlush(ctx).Err()
 		})
 		if err != nil {
-			cmd.SetErr(err)
+			return err
 		}
 		return nil
 	})
@@ -99,10 +98,9 @@ func (c *ClusterClient) ScriptExists(ctx context.Context, hashes ...string) *Boo
 			return nil
 		})
 		if err != nil {
-			cmd.SetErr(err)
-		} else {
-			cmd.val = result
+			return err
 		}
+		cmd.val = result
 		return nil
 	})
 	return cmd
